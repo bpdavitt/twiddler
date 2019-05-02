@@ -1,0 +1,30 @@
+.tweet {
+  
+  display: block;
+  margin: 0;
+  border: 5px solid black;
+  justify-content: center;
+  height: 100px;
+  width: 200px;
+  flex-wrap: wrap;
+  
+}
+
+.btn-container {
+	display:flex;
+	margin: 0 auto;
+	padding-left: 30px;
+	padding-right: 30px;
+	width: 500px;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.new-tweets {
+  border-radius: 5px;
+  display: inline-block;
+  margin: 0;
+  border: 1px solid #dfe2e5;
+  padding: 10px 30px;
+  justify-content: center;
+}
