@@ -31,7 +31,13 @@
             var $tweet = $('<div class = "tweet"></div>');
             var $handle = $('<div class = "handle"</div>');
             var $created = $('<div class = "created"</div>')
-            $handle.html('<a href="#">@' + tweet.user + '</a>') //clickable username
+          /*  $handle.html('<a href="#">@' + tweet.user + '</a>') //clickable username
+            $handle.on('click', function(event){
+              var tweeter = this.textContent.slice(1);
+              userTweets(tweeter);
+            });
+            */
+            $handle.text('@' + tweet.user);
             $handle.on('click', function(event){
               var tweeter = this.textContent.slice(1);
               userTweets(tweeter);
@@ -54,7 +60,8 @@
             var $tweet = $('<div class = "tweet"></div>');
             var $handle = $('<div class = "handle"</div>');
             var $created = $('<div class = "created"</div>') 
-            $handle.html('<a href="#">@' + tweet.user + '</a>') //clickable username
+            //$handle.html('<a href="#">@' + tweet.user + '</a>') //clickable username
+            $handle.text('@' + tweet.user);
             $handle.on('click', function(event){
               var tweeter = this.textContent.slice(1);
               userTweets(tweeter);
@@ -73,17 +80,9 @@
           userTweets(tweeter);
 
         });
-
-
-
-
 //<a id="myLink" href="javascript:MyFunction();">link text</a>
         
-
-        
-
       }); //this goes with $(document).ready function
-
     </script>
 
     <div class="btn-container"> <!-- formatting for the button below to live in -->

@@ -1,30 +1,57 @@
-.tweet {
-  
-  display: block;
-  margin: 0;
-  border: 5px solid black;
+body {
+  background-color: #EAF8FD;
+}
+
+
+.btn-container { /*container for the new tweets button*/
+  display:flex;
+  margin: 0 auto;
+  padding-left: 30px;
+  padding-right: 30px;
+  width: 500px;
   justify-content: center;
-  height: 100px;
-  width: 200px;
   flex-wrap: wrap;
-  
 }
 
-.btn-container {
-	display:flex;
-	margin: 0 auto;
-	padding-left: 30px;
-	padding-right: 30px;
-	width: 500px;
-	justify-content: center;
-	flex-wrap: wrap;
-}
-
-.new-tweets {
+.new-tweets { /*new tweets reload button*/
   border-radius: 5px;
   display: inline-block;
   margin: 0;
   border: 1px solid #dfe2e5;
   padding: 10px 30px;
   justify-content: center;
+  font-family: Helvetica Neue;
+}
+
+.tweet-container { /*box that contains all of the individual tweets*/
+  display: flex;
+  width: 400px;
+  margin: auto;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: white;
+}
+
+.tweet { /*singular tweet*/
+  display: block;
+  margin: 0;
+  border: 1px solid black;
+  justify-content: center;
+  height: auto;
+  width: 300px;
+  flex-wrap: wrap;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 10px;
+  font-family: Helvetica Neue;
+  font-size: 15px;
+}
+
+.created {
+  font-size: 10px;
+  font-family: Helvetica Neue;
+}
+
+.handle{
+  font-weight: bold;
 }
