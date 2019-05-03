@@ -22,26 +22,74 @@
           index -= 1;
         }*/
 
-        var index = 0;
-        $(".new-tweets").on('click', function(){
-          while(index < streams.home.length){
-            var tweet = streams.home[index];
-            var $tweet = $('<div class = "tweet"></div>');  
-            $tweet.html('<a href="index.html">@'+ tweet.user +'</a>' + ':\n' + tweet.message + '\n' + tweet.created_at);        
+        var userTweets = function(handle){
+          var $tweetContainer = $('.tweet-container');
+          $tweetContainer.html('');
+          index = 0;       
+          while(index < streams.users[handle].length){ //variable userIndex is below var index above
+            var tweet = streams.users[handle][index]; //referencing the tweet from data_generator.js
+            var $tweet = $('<div class = "tweet"></div>');
+            var $handle = $('<div class = "handle"</div>');
+            var $created = $('<div class = "created"</div>')
+            $handle.html('<a href="#">@' + tweet.user + '</a>') //clickable username
+            $handle.on('click', function(event){
+              var tweeter = this.textContent.slice(1);
+              userTweets(tweeter);
+            });
+            $tweet.text(tweet.message)
+            $created.text(tweet.created_at)
+            $handle.prependTo($tweet);
+            $created.appendTo($tweet);
             $tweet.prependTo('.tweet-container');
             index++;
           }
+          index = 0;
+        };
+
+        var index = 0;
+        
+        $(".new-tweets").on('click', function(){ //whenever you click new-tweets (Load new Tweets!) button, the function below will run
+          while(index < streams.home.length){
+            var tweet = streams.home[index];
+            var $tweet = $('<div class = "tweet"></div>');
+            var $handle = $('<div class = "handle"</div>');
+            var $created = $('<div class = "created"</div>') 
+            $handle.html('<a href="#">@' + tweet.user + '</a>') //clickable username
+            $handle.on('click', function(event){
+              var tweeter = this.textContent.slice(1);
+              userTweets(tweeter);
+            });
+            $tweet.text(tweet.message)
+            $created.text(tweet.created_at)
+            $handle.prependTo($tweet);
+            $created.appendTo($tweet);
+            $tweet.prependTo('.tweet-container');
+            index++;
+          }
+        });
+
+        $(".handle").on('click', function(event){
+          var tweeter = this.textContent.slice(1);
+          userTweets(tweeter);
 
         });
 
-      });
+
+
+
+//<a id="myLink" href="javascript:MyFunction();">link text</a>
+        
+
+        
+
+      }); //this goes with $(document).ready function
 
     </script>
 
-    <div class="btn-container">
-      <button class = "new-tweets">Load new Tweets!</button>
+    <div class="btn-container"> <!-- formatting for the button below to live in -->
+      <button class="new-tweets">Load new Tweets!</button> <!-- create a new button //"class" is for JS, CSS, and jQuery to target -->
     </div>
-    <div class="tweet-container"></div>
+    <div class="tweet-container"></div> <!-- box container for our tweets to live in, will be appending individual tweets into this container, see inside while loop for new tweets -->
 
   </body>
 </html>
