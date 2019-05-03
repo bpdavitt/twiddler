@@ -12,62 +12,57 @@
       $(document).ready(function(){
         //var $body = $('body');
         //$body.html('');
-/*
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div class = "tweet"></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message + '\n' + tweet.created_at);
-          $tweet.appendTo('.tweet-container');
-          index -= 1;
-        }*/
 
         var userTweets = function(handle){
           var $tweetContainer = $('.tweet-container');
           $tweetContainer.html('');
-          index = 0;       
+          
+          
+          var index = 0;
           while(index < streams.users[handle].length){ //variable userIndex is below var index above
             var tweet = streams.users[handle][index]; //referencing the tweet from data_generator.js
             var $tweet = $('<div class = "tweet"></div>');
             var $handle = $('<div class = "handle"</div>');
             var $created = $('<div class = "created"</div>')
-          /*  $handle.html('<a href="#">@' + tweet.user + '</a>') //clickable username
-            $handle.on('click', function(event){
-              var tweeter = this.textContent.slice(1);
-              userTweets(tweeter);
-            });
-            */
+            var currentTime = new Date();
+            var timeElapsed = Math.floor((currentTime - tweet.created_at) / 1000);
+
             $handle.text('@' + tweet.user);
             $handle.on('click', function(event){
               var tweeter = this.textContent.slice(1);
               userTweets(tweeter);
             });
+            
             $tweet.text(tweet.message)
-            $created.text(tweet.created_at)
+            $created.text(secondConverter(timeElapsed))
             $handle.prependTo($tweet);
             $created.appendTo($tweet);
             $tweet.prependTo('.tweet-container');
             index++;
           }
-          index = 0;
         };
-
-        var index = 0;
-        
+                
         $(".new-tweets").on('click', function(){ //whenever you click new-tweets (Load new Tweets!) button, the function below will run
+          var $tweetContainer = $('.tweet-container');
+          $tweetContainer.html('');
+          var index = 0;
           while(index < streams.home.length){
             var tweet = streams.home[index];
             var $tweet = $('<div class = "tweet"></div>');
             var $handle = $('<div class = "handle"</div>');
-            var $created = $('<div class = "created"</div>') 
-            //$handle.html('<a href="#">@' + tweet.user + '</a>') //clickable username
+            var $created = $('<div class = "created"</div>');
+            var currentTime = new Date();
+            var timeElapsed = Math.floor((currentTime - tweet.created_at) / 1000);
+
             $handle.text('@' + tweet.user);
+            
             $handle.on('click', function(event){
               var tweeter = this.textContent.slice(1);
               userTweets(tweeter);
             });
-            $tweet.text(tweet.message)
-            $created.text(tweet.created_at)
+            
+            $tweet.text(tweet.message);
+            $created.text(secondConverter(timeElapsed));
             $handle.prependTo($tweet);
             $created.appendTo($tweet);
             $tweet.prependTo('.tweet-container');
@@ -75,12 +70,32 @@
           }
         });
 
-        $(".handle").on('click', function(event){
-          var tweeter = this.textContent.slice(1);
-          userTweets(tweeter);
+        function secondConverter(elapsed){
+          var hours = Math.floor(elapsed/3600);
+          var minutes = Math.floor(elapsed/60 - hours * 60);
+          var seconds = elapsed % 60
+          var time = '';
+          if(hours > 1){
+              time += hours + ' hours ';
+          } else if(hours === 1) {
+              time += hours + ' hour '
+          }
+          if(minutes > 1){
+              time += minutes + ' minutes ';
+          } else if(minutes === 1){
+              time += minutes + ' minute '
+          }
+          if(seconds > 1){
+              time += seconds + ' seconds ';
+          }else if(seconds === 1){
+              time += seconds + ' second '
+          }
+          if(hours === 0 && minutes === 0 && seconds === 0){
+            return 'Just now';
+          }
 
-        });
-//<a id="myLink" href="javascript:MyFunction();">link text</a>
+          return time + 'ago';
+        }
         
       }); //this goes with $(document).ready function
     </script>

@@ -1,5 +1,5 @@
 body {
-  background-color: #EAF8FD;
+  background-color: #E6ECF0;
 }
 
 
@@ -16,7 +16,7 @@ body {
 .new-tweets { /*new tweets reload button*/
   border-radius: 5px;
   display: inline-block;
-  margin: 0;
+  margin-bottom: 10px;
   border: 1px solid #dfe2e5;
   padding: 10px 30px;
   justify-content: center;
@@ -25,11 +25,11 @@ body {
 
 .tweet-container { /*box that contains all of the individual tweets*/
   display: flex;
-  width: 400px;
+  width: 350px;
   margin: auto;
   justify-content: center;
   flex-wrap: wrap;
-  background-color: white;
+  background-color: #E6ECF0;
 }
 
 .tweet { /*singular tweet*/
@@ -38,13 +38,14 @@ body {
   border: 1px solid black;
   justify-content: center;
   height: auto;
-  width: 300px;
+  width: 350px;
   flex-wrap: wrap;
   padding: 10px;
-  margin-top: 10px;
-  border-radius: 10px;
+  margin-top: 0.5px;
+  margin-bottom: 0.5px;
   font-family: Helvetica Neue;
   font-size: 15px;
+  background-color: white;
 }
 
 .created {
