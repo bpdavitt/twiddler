@@ -12,25 +12,29 @@
       $(document).ready(function(){
         //var $body = $('body');
         //$body.html('');
-
-        var userTweets = function(handle){
+          //Function will wipe all tweets from tweet-container and redraw either ALL tweets or all tweets from a specific user
+          //Time elapsed since tweet creation will refresh every time displayTweets() is called
+          var displayTweets = function(handle){
           var $tweetContainer = $('.tweet-container');
-          $tweetContainer.html('');
-          
-          
+          $tweetContainer.html('')
+          if(handle !== undefined){
+            var tweetSource = streams.users[handle];
+          }else{
+            var tweetSource = streams.home;
+          }
           var index = 0;
-          while(index < streams.users[handle].length){ //variable userIndex is below var index above
-            var tweet = streams.users[handle][index]; //referencing the tweet from data_generator.js
+          while(index < tweetSource.length){ 
+            var tweet = tweetSource[index]; 
             var $tweet = $('<div class = "tweet"></div>');
             var $handle = $('<div class = "handle"</div>');
             var $created = $('<div class = "created"</div>')
             var currentTime = new Date();
             var timeElapsed = Math.floor((currentTime - tweet.created_at) / 1000);
-
             $handle.text('@' + tweet.user);
+            //When a handle is clicked on, will display tweets by that HANDLE only
             $handle.on('click', function(event){
               var tweeter = this.textContent.slice(1);
-              userTweets(tweeter);
+              displayTweets(tweeter);
             });
             
             $tweet.text(tweet.message)
@@ -40,36 +44,19 @@
             $tweet.prependTo('.tweet-container');
             index++;
           }
-        };
+        }
                 
-        $(".new-tweets").on('click', function(){ //whenever you click new-tweets (Load new Tweets!) button, the function below will run
-          var $tweetContainer = $('.tweet-container');
-          $tweetContainer.html('');
-          var index = 0;
-          while(index < streams.home.length){
-            var tweet = streams.home[index];
-            var $tweet = $('<div class = "tweet"></div>');
-            var $handle = $('<div class = "handle"</div>');
-            var $created = $('<div class = "created"</div>');
-            var currentTime = new Date();
-            var timeElapsed = Math.floor((currentTime - tweet.created_at) / 1000);
-
-            $handle.text('@' + tweet.user);
-            
-            $handle.on('click', function(event){
-              var tweeter = this.textContent.slice(1);
-              userTweets(tweeter);
-            });
-            
-            $tweet.text(tweet.message);
-            $created.text(secondConverter(timeElapsed));
-            $handle.prependTo($tweet);
-            $created.appendTo($tweet);
-            $tweet.prependTo('.tweet-container');
-            index++;
-          }
+        $(".new-tweets").on('click', function(){ 
+          displayTweets();          
         });
 
+        //Lets user submit tweets; visitor handle is currently hardcoded into data_generator
+        $(".user-submit").on('click', function(event){ 
+          let tweetMessage = document.getElementsByClassName("user-tweet")[0].value;
+          writeTweet(tweetMessage);
+          event.preventDefault();
+        });
+        //Will give time in a human-readable format; Will update on refresh of stream when tweets are redrawn
         function secondConverter(elapsed){
           var hours = Math.floor(elapsed/3600);
           var minutes = Math.floor(elapsed/60 - hours * 60);
@@ -97,13 +84,17 @@
           return time + 'ago';
         }
         
-      }); //this goes with $(document).ready function
+      }); 
     </script>
 
-    <div class="btn-container"> <!-- formatting for the button below to live in -->
-      <button class="new-tweets">Load new Tweets!</button> <!-- create a new button //"class" is for JS, CSS, and jQuery to target -->
+    <div class="btn-container">
+      <button class="btn new-tweets">Load new Tweets!</button>
     </div>
-    <div class="tweet-container"></div> <!-- box container for our tweets to live in, will be appending individual tweets into this container, see inside while loop for new tweets -->
+    <div class = "tweet-form">
+      New Tweet:<input class = "user-tweet" type="text" name="New Tweet"/><br>
+      <input class = "user-submit" type="submit" value="Submit New Tweet">
+    </div>
+    <div class="tweet-container"></div> 
 
   </body>
 </html>
